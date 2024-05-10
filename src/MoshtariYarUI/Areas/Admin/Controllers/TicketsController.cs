@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using Contracts;
+using Data;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Experimental.ProjectCache;
@@ -8,7 +9,15 @@ namespace MoshtariYarUI.Areas.Admin.Controllers
     [Area("Admin")]
     public class TicketsController : Controller
     {
-        private readonly InMemoryDatabase _database = new InMemoryDatabase();
+        //private readonly EfRepository _database = new EfRepository();
+        private readonly IRepository _database;
+
+        public TicketsController(IRepository database)
+        {
+            _database = database;
+        }
+
+
         public IActionResult List()
         {
             var model = _database.GetTickets();
